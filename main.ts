@@ -17,9 +17,11 @@ async function serveFile(requestEvent: Deno.RequestEvent) {
   let file: Deno.File;
   try {
     file = await Deno.open("." + filepath);
-  } catch {
+  } catch (e) {
     // If the file cannot be opened, return a "404 Not Found" response
-    const notFoundResponse = new Response("404 Not Found", { status: 404 });
+    const notFoundResponse = new Response("404 Not Found\n" + e, {
+      status: 404,
+    });
     await requestEvent.respondWith(notFoundResponse);
     return;
   }
