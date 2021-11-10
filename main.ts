@@ -14,9 +14,9 @@ async function serveFile(requestEvent: Deno.RequestEvent) {
   const url = new URL(requestEvent.request.url);
   const filepath = decodeURIComponent(url.pathname);
   // Try opening the file
-  let file: string;
+  let file: Uint8Array;
   try {
-    file = await Deno.readTextFile("." + filepath);
+    file = await Deno.readFile("." + filepath);
   } catch {
     // If the file cannot be opened, return a "404 Not Found" response
     const notFoundResponse = new Response("404 Not Found", { status: 404 });
